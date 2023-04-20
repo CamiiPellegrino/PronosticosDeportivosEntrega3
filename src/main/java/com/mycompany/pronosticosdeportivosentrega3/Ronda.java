@@ -58,10 +58,4 @@ public class Ronda {
 
         return retorno;
     }
-    
-    
-    @Override
-    public String toString() {
-        return "Ronda{" + "pronosticos=" + pronosticos + '}';
-    }
 }

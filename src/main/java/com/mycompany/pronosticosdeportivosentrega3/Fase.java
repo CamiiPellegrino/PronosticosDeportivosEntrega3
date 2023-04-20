@@ -74,11 +74,5 @@ public class Fase {
         }
         puntos+=puntosExtra;
         return puntos;
-    }
-
-    @Override
-    public String toString() {
-        return "Fase{" + "rondas=" + rondas + '}';
-    }
-    
+    }    
 }

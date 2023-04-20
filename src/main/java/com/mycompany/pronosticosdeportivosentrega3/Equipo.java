@@ -14,14 +14,5 @@ public class Equipo
     public String getNombre()
     {
         return nombre;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipo{" + "nombre=" + nombre + '}';
-    }
-    
-    
-    
-    
+    }    
 }

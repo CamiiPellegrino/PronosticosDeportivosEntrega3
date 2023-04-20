@@ -16,7 +16,6 @@ public class PronosticosDeportivosEntrega3 {
         
         //Resultados
         ArrayList<String> filaRtdos = modelo.resultadoPorId(idFilaRtdos);
-
         while(!filaRtdos.isEmpty()){
             int i=0; boolean encontrado = false; //variables usadas en cada buscador de este while
             Fase faseAct = new Fase(Integer.parseInt(filaRtdos.get(5)));
@@ -43,17 +42,9 @@ public class PronosticosDeportivosEntrega3 {
                     Integer.parseInt(filaRtdos.get(2))
             );
             rondaAct.agregarPartido(partidoAct);
-            System.out.println("fase: ");
-            System.out.println(faseAct);
 
             idFilaRtdos++;
             filaRtdos = modelo.resultadoPorId(idFilaRtdos);
-        }
-        for(Fase f : listaFases){
-            for(Ronda r : f.getRondas()){
-                System.out.println("r");
-                System.out.println(r);
-            }
         }
         
         //Pronosticos

@@ -38,12 +38,4 @@ public class Partido
             return null;
         } 
     }
-
-    @Override
-    public String toString() {
-        return "Partido{" + "eq1=" + eq1 + ", eq2=" + eq2 + ", golesEq1=" + golesEq1 + ", golesEq2=" + golesEq2 + '}';
-    }
-
-
-    
 }

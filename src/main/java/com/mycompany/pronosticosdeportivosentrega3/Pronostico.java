@@ -42,14 +42,5 @@ public class Pronostico {
             puntos = 1;
         }
         return puntos;
-    }
-
-    @Override
-    public String toString() {
-        return "Pronostico{" + "partido=" + partido + '}';
-    }
-
-    
-    
-    
+    }    
 }

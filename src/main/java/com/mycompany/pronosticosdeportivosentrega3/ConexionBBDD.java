@@ -4,24 +4,38 @@
  */
 package com.mycompany.pronosticosdeportivosentrega3;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  *
  * @author camii
  */
 public class ConexionBBDD {
-    private final String bbdd = "pronosticos_deportivos";
-    private final String usr="root";
-    private final String pwd="";
-    private final String url="jdbc:mysql://localhost:3306/" + bbdd;
+    private String usr;
+    private String pwd;
+    private String url;
     
-    public Connection conectar() throws SQLException, ClassNotFoundException{
+    public ConexionBBDD() throws FileNotFoundException, IOException{
+        BufferedReader br = new BufferedReader(new FileReader("config.json"));
+        String linea = br.readLine();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, String> map = objectMapper.readValue(linea, new TypeReference<Map<String,String>>(){});
+        this.url = map.get("url");
+        this.usr = map.get("user");
+        this.pwd = map.get("password");
+    }
+    public Connection conectar() throws ClassNotFoundException, SQLException{
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection cn = DriverManager.getConnection(url, usr, pwd);
         return cn;
     }
-
 }
