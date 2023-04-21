@@ -43,7 +43,7 @@ public class Ronda {
     public ArrayList<Integer> puntajePorPersona(String nom){
         int puntos = 0; int puntosExtraPorRonda = 5; //si vale 0 no gana ptos extra por ronda adivinada completamente
                                                     //hacer dinamico al 5
-        for(Pronostico p : pronosticos){ 
+        for(Pronostico p : pronosticos){
             if(p.getParticipante().getNombre().equals(nom)){
                 puntos += p.calcularPuntos();
                 if(p.calcularPuntos()==0){
@@ -58,4 +58,5 @@ public class Ronda {
 
         return retorno;
     }
+    
 }

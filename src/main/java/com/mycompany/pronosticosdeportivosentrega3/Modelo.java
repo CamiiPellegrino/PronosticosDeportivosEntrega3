@@ -9,8 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,17 +17,19 @@ import java.util.logging.Logger;
 public class Modelo {
     private final String select_pronostico_por_ID = "SELECT * FROM `pronosticos` WHERE (id_pronosticos=?)";
     private final String select_resultado_por_ID = "SELECT * FROM `resultados` WHERE (id_resultados=?)";
-    private ConexionBBDD conexion = new ConexionBBDD();
+    private final String select_ultimo_pronostico = "SELECT * FROM pronosticos ORDER BY id_pronosticos DESC LIMIT 1;";
+    private final ConexionBBDD conexion = new ConexionBBDD();
+    private int ultimoIdPronosticoLeido;
     
-    public ArrayList<String> pronosticoPorId(int id_pronostico){
+    public ArrayList<String> pronosticoPorId(int id_pronostico){ //eliminar metodo
         ArrayList<String> retorno = new ArrayList<>();
         try(Connection con = conexion.conectar();
             PreparedStatement ps = con.prepareStatement(select_pronostico_por_ID);){
                 ps.setInt(1, id_pronostico);
                 ResultSet rs = ps.executeQuery();
                 if(rs.next()){
-                    for(int i=1; i<=9; i++){
-                        if(i<=5 || i==8){
+                    for(int i=1; i<=6; i++){
+                        if(i<=4){
                             retorno.add(rs.getString(i));
                         }else{
                             retorno.add(String.valueOf(rs.getInt(i)));
@@ -41,6 +41,7 @@ public class Modelo {
         }
         return retorno;
     }
+    
     public ArrayList<String> resultadoPorId(int id_resultado){
         ArrayList<String> retorno = new ArrayList<>();
         try(Connection con = conexion.conectar();
@@ -62,6 +63,55 @@ public class Modelo {
         return retorno;
     }
     
+    public ArrayList<String> siguientePronostico(int idInicial){
+        int pronosticoFinal = cantidadDePronosticos();
+        boolean pronosticoEncontrado = false;
+        ArrayList<String> retorno = new ArrayList<>();
+        int id = idInicial;
+        do{
+        try(Connection con = conexion.conectar();
+            PreparedStatement ps = con.prepareStatement(select_pronostico_por_ID);){
+                retorno.clear();
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    for(int i=1; i<=6; i++){
+                        if(i<=4){
+                            retorno.add(rs.getString(i));
+                        }else{
+                            retorno.add(String.valueOf(rs.getInt(i)));
+                        }
+                    }
+                    pronosticoEncontrado = !retorno.isEmpty();
+                }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("error en Modelo, siguientePronostico()", e);
+        }
+        id++;
+        }while(id<=pronosticoFinal & !pronosticoEncontrado);
+        ultimoIdPronosticoLeido = id;
+        
+        return retorno;
+    }
     
+    public int getUltmoIdPronosticoLeido(){
+        return ultimoIdPronosticoLeido;
+    }
+    public int cantidadDePronosticos(){
+        int idUltimoPronostico = 0;
+                try(Connection con = conexion.conectar();
+                    PreparedStatement ps = con.prepareStatement(select_ultimo_pronostico);){
+                    ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    idUltimoPronostico = rs.getInt(5);
+                }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("error en Modelo, cantidadDePronosticos()", e);
+        }
+
+        
+        return idUltimoPronostico;
+    }
     
 }

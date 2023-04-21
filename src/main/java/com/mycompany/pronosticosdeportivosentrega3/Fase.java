@@ -29,40 +29,28 @@ public class Fase {
         return rondas;
     }
     
-    
     //Otros metodos:
     public Ronda buscarRondaPorId(int id_ronda){
-        Ronda ronda = null;
+        Ronda ronda = new Ronda(id_ronda);
         int z=0;
         boolean rondaEncontrada = false;
         while(z<rondas.size() & !rondaEncontrada){
             if(rondas.get(z).getIdRonda()==id_ronda){
+                rondaEncontrada = true;
                 ronda = rondas.get(z);
             }
             z++;
         }
-        
+        if(!rondaEncontrada){
+            this.agregarRonda(ronda);
+        }
         return ronda;
     }
     
-    public Ronda rondaPorId(int idRonda){
-        int z = 0; boolean rondaEncontrada = false;
-        Ronda rondaReturn = null;
-        while(z<this.rondas.size() & !rondaEncontrada){
-            if(rondas.get(z).getIdRonda() == idRonda){
-                rondaReturn = rondas.get(z);
-                rondaEncontrada = true;
-            }
-            z++;
-        }
-        return rondaReturn;
-    }
     
     public void agregarRonda(Ronda r){
         rondas.add(r);
     }
-    
-    
     
     public int puntosPorJugador(String nom){
         int puntos = 0; int puntosExtra = 10;
@@ -74,5 +62,5 @@ public class Fase {
         }
         puntos+=puntosExtra;
         return puntos;
-    }    
+    }       
 }

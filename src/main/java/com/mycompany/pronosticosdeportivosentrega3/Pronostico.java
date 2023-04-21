@@ -42,5 +42,5 @@ public class Pronostico {
             puntos = 1;
         }
         return puntos;
-    }    
+    }       
 }
