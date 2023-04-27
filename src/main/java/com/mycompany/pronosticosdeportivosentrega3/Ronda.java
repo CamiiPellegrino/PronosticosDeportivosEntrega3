@@ -7,22 +7,15 @@ public class Ronda {
     private ArrayList<Pronostico> pronosticos = new ArrayList<>();
     private ArrayList<Partido> partidos = new ArrayList<>();
     private int idRonda;
-    private String puntosRondaPerfecta;
 
     //CONSTRUCTOR
     public Ronda(int idRonda){
         this.idRonda=idRonda;
-        LectorJson lector = new LectorJson("config.json");
-        this.puntosRondaPerfecta = lector.obtenerDatoDeRuta("puntosPorRonda");
     }
     //Getters y setters
     public int getIdRonda(){
         return idRonda;
     }
-    public String getPuntosRondaPerfecta() {
-        return puntosRondaPerfecta;
-    }
-    
     
     //Otros metodos: 
     public void agregarPronostico(Pronostico p){
@@ -45,20 +38,20 @@ public class Ronda {
         return partido;
     }
 
-    public ArrayList<Integer> puntajePorPersona(String nom){
-        int puntos = 0; int puntosPorRonda = Integer.parseInt(puntosRondaPerfecta);        
+    public ArrayList<Integer> puntajePorPersona(String nom, int ptosRondaPerfecta){
+        int puntos = 0; 
         for(Pronostico p : pronosticos){
             if(p.getParticipante().getNombre().equals(nom)){
                 puntos += p.calcularPuntos();
                 if(p.calcularPuntos()==0){
-                    puntosPorRonda = 0;
+                    ptosRondaPerfecta = 0;
                 }
             }
         }
-        puntos+=puntosPorRonda;
+        puntos+=ptosRondaPerfecta;
         ArrayList<Integer> retorno = new ArrayList<>();
         retorno.add(puntos); 
-        retorno.add(puntosPorRonda);
+        retorno.add(ptosRondaPerfecta);
         return retorno;
     }
     

@@ -35,7 +35,7 @@ public class FaseTest {
         r1.agregarPartido(p1); r1.agregarPronostico(pron1);
         r2.agregarPartido(p2); r2.agregarPronostico(pron2);
         fase.agregarRonda(r1); fase.agregarRonda(r2);
-        int puntaje = fase.puntosPorJugador(nomJugador);
+        int puntaje = fase.puntosPorJugador(nomJugador,puntosPorRonda, puntosPorFase);
         
         assertEquals(puntaje, 2+(puntosPorRonda*2)+puntosPorFase); 
     }

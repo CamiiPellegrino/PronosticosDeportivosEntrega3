@@ -7,14 +7,14 @@ CREATE TABLE resultados (
      equipo2 varchar(45),
      ronda int,
      fase int,
-     id_resultados int PRIMARY KEY
+     id_resultados int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT
 );
 CREATE TABLE pronosticos(
     gana1 varchar(5),
     empate varchar(5),
     gana2 varchar(5),
     persona varchar(45),
-    id_pronosticos int PRIMARY KEY,
+    id_pronosticos int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     FK_resultado int,
     CONSTRAINT FOREIGN KEY (FK_resultado)
 	REFERENCES resultados(id_resultados) 

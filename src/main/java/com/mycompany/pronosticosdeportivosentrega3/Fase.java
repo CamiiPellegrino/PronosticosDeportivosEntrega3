@@ -13,14 +13,11 @@ import java.util.ArrayList;
 public class Fase {
     private ArrayList<Ronda> rondas;
     private int idFase;
-    private String puntosFasePerfecta;
     
     //Constructor/es:
     public Fase(int idFase){
         rondas = new ArrayList<>();
         this.idFase = idFase;
-        LectorJson lector = new LectorJson("config.json");
-        this.puntosFasePerfecta = lector.obtenerDatoDeRuta("puntosPorFase");
     }
     
     //Getters y setters:
@@ -32,10 +29,6 @@ public class Fase {
         return rondas;
     }
 
-    public String getPuntosFasePerfecta() {
-        return puntosFasePerfecta;
-    }
-    
     //Otros metodos:
     public Ronda buscarRondaPorId(int id_ronda){
         Ronda ronda = rondas.stream()
@@ -54,15 +47,15 @@ public class Fase {
         rondas.add(r);
     }
     
-    public int puntosPorJugador(String nom){
-        int puntos = 0; int puntosFase = Integer.parseInt(this.puntosFasePerfecta);
+    public int puntosPorJugador(String nom, int puntosRondaPerfecta, int puntosFasePerfecta){
+        int puntos = 0; 
         for(Ronda ronda : rondas){
-            puntos+=ronda.puntajePorPersona(nom).get(0);
-            if(ronda.puntajePorPersona(nom).get(1)==0){
-                puntosFase = 0;
+            puntos+=ronda.puntajePorPersona(nom, puntosRondaPerfecta).get(0);
+            if(ronda.puntajePorPersona(nom, puntosRondaPerfecta).get(1)==0){
+                puntosFasePerfecta = 0;
             }
         }
-        puntos+=puntosFase;
+        puntos+=puntosFasePerfecta;
         return puntos;
     }       
 }

@@ -96,7 +96,7 @@ public class PronosticosDeportivosEntrega3 {
                 int puntosTotales = 0;
                 System.out.println(p.getNombre());
                 for(Fase f : listaFases){
-                    puntosTotales += f.puntosPorJugador(p.getNombre());
+                    puntosTotales += f.puntosPorJugador(p.getNombre(), Integer.parseInt(ptosPorRonda), Integer.parseInt(ptosPorFase));
                 }
                 System.out.println(p.getNombre()+": "+puntosTotales);
             }
