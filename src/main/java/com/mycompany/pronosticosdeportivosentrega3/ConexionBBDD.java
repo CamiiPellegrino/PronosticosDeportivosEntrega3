@@ -14,8 +14,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,24 +24,14 @@ public class ConexionBBDD {
     private String pwd;
     private String url;
     
-    public ConexionBBDD(){
-        
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader("config.json"));
-            String linea = br.readLine();
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, String> map = objectMapper.readValue(linea, new TypeReference<Map<String,String>>(){});
-            this.url = map.get("url");
-            this.usr = map.get("user");
-            this.pwd = map.get("password");
-
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException("error al conectar con BBDD", ex);
-        } catch (IOException ex) {
-            throw new RuntimeException("error al conectar con BBDD", ex);
-        }
+    public ConexionBBDD(String ruta){
+        LectorJson lector = new LectorJson(ruta);
+        this.usr = lector.obtenerDatoDeRuta("user");
+        this.pwd = lector.obtenerDatoDeRuta("password");
+        this.url = lector.obtenerDatoDeRuta("url");
     }
+    
+    
     public Connection conectar() throws ClassNotFoundException, SQLException{
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection cn = DriverManager.getConnection(url, usr, pwd);

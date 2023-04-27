@@ -1,1 +1,1 @@
-{"url": "jdbc:mysql://localhost:3306/pronosticos_deportivos","user": "root", "password":""}
+{"url": "jdbc:mysql://localhost:3306/pronosticos_deportivos","user": "root", "password":"","puntosPorRonda":"5","puntosPorFase":"10"}

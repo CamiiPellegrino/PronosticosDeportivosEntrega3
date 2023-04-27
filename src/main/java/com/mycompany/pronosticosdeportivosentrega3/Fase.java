@@ -13,11 +13,14 @@ import java.util.ArrayList;
 public class Fase {
     private ArrayList<Ronda> rondas;
     private int idFase;
+    private String puntosFasePerfecta;
     
     //Constructor/es:
     public Fase(int idFase){
         rondas = new ArrayList<>();
         this.idFase = idFase;
+        LectorJson lector = new LectorJson("config.json");
+        this.puntosFasePerfecta = lector.obtenerDatoDeRuta("puntosPorFase");
     }
     
     //Getters y setters:
@@ -28,39 +31,38 @@ public class Fase {
     public ArrayList<Ronda> getRondas() {
         return rondas;
     }
+
+    public String getPuntosFasePerfecta() {
+        return puntosFasePerfecta;
+    }
     
     //Otros metodos:
     public Ronda buscarRondaPorId(int id_ronda){
-        Ronda ronda = new Ronda(id_ronda);
-        int z=0;
-        boolean rondaEncontrada = false;
-        while(z<rondas.size() & !rondaEncontrada){
-            if(rondas.get(z).getIdRonda()==id_ronda){
-                rondaEncontrada = true;
-                ronda = rondas.get(z);
-            }
-            z++;
-        }
-        if(!rondaEncontrada){
+        Ronda ronda = rondas.stream()
+        .filter(r-> r.getIdRonda()==id_ronda)
+        .findFirst()
+        .orElse(null);
+        
+        if(ronda == null){
+            ronda = new Ronda(id_ronda);
             this.agregarRonda(ronda);
         }
         return ronda;
     }
-    
     
     public void agregarRonda(Ronda r){
         rondas.add(r);
     }
     
     public int puntosPorJugador(String nom){
-        int puntos = 0; int puntosExtra = 10;
+        int puntos = 0; int puntosFase = Integer.parseInt(this.puntosFasePerfecta);
         for(Ronda ronda : rondas){
             puntos+=ronda.puntajePorPersona(nom).get(0);
             if(ronda.puntajePorPersona(nom).get(1)==0){
-                puntosExtra = 0;
+                puntosFase = 0;
             }
         }
-        puntos+=puntosExtra;
+        puntos+=puntosFase;
         return puntos;
     }       
 }

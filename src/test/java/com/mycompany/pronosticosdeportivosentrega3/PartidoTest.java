@@ -1,11 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
 package com.mycompany.pronosticosdeportivosentrega3;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -15,14 +15,19 @@ public class PartidoTest {
     
     public PartidoTest() {
     }
+
+
     @Test
     public void testResultadoPartido() {
         System.out.println("resultadoPartido");
-        Partido instance = new Partido(new Equipo("uno"), new Equipo("dos"),1,2);
-        ResultadoEnum expResult = ResultadoEnum.GANADOR_EQ2;
-        ResultadoEnum result = instance.resultadoPartido();
-        assertSame(expResult, result);
-    }
+        Equipo eq1 = new Equipo("brasil");
+        Equipo eq2 = new Equipo("peru");
 
+        Partido instance = new Partido(eq1, eq2, 1, 0);
+        ResultadoEnum expResult = ResultadoEnum.GANADOR_EQ1;
+        ResultadoEnum result = instance.resultadoPartido();
+        System.out.println(expResult==result);
+        assertEquals(expResult, result);
+    }
     
 }

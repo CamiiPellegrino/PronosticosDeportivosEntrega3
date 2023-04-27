@@ -1,0 +1,22 @@
+CREATE DATABASE pronosticos_deportivos;
+USE pronosticos_deportivos;
+CREATE TABLE resultados (
+     equipo1 varchar(45),
+     golesEquipo1 int,
+     golesEquipo2 int,
+     equipo2 varchar(45),
+     ronda int,
+     fase int,
+     id_resultados int PRIMARY KEY
+);
+CREATE TABLE pronosticos(
+    gana1 varchar(5),
+    empate varchar(5),
+    gana2 varchar(5),
+    persona varchar(45),
+    id_pronosticos int PRIMARY KEY,
+    FK_resultado int,
+    CONSTRAINT FOREIGN KEY (FK_resultado)
+	REFERENCES resultados(id_resultados) 
+	ON DELETE CASCADE ON UPDATE CASCADE
+)
